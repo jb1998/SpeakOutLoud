@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Text</string>
     <string name="instructions">
-        Point Mobile Camera to the text and then listen the text.
-        \n \n \n \n \n It's that simple..!!!
+       " Point Mobile Camera to the text and then listen the text.
+        \n \n \n  It's that simple..!!! "
     </string>
 </resources>

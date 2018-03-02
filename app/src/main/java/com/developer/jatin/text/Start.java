@@ -12,6 +12,9 @@ Button navigate;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+
+
         getSupportActionBar().hide();
         navigate=(Button)findViewById(R.id.navigate);
         navigate.setOnClickListener(new View.OnClickListener() {
