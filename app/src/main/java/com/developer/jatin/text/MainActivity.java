@@ -1,6 +1,7 @@
 package com.developer.jatin.text;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.speech.tts.TextToSpeech;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements
     SurfaceView surfaceView;
     TextView textView;
     private TextToSpeech tts;
-    Switch mySwitch;
+    Button exit;
     CameraSource cameraSource;
  final int RequestCameraPermissionID=1001;
 
@@ -62,26 +65,20 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-        mySwitch=(Switch)findViewById(R.id.switch1);
-        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // do something, the isChecked will be
-                // true if the switch is in the On position
-                if(isChecked){
-                    if (tts != null) {
-                        textView.setText("Point to Text");
-                        tts.stop();
-                        tts.shutdown();
-                    }
-                }else{
-                    tts_again();
-                }
-            }
-        });
+        exit=(Button)findViewById(R.id.exit);
+
         surfaceView = (SurfaceView) findViewById(R.id.surface);
         textView = (TextView) findViewById(R.id.text);
          textView.setBackgroundColor(Color.TRANSPARENT);
         tts = new TextToSpeech(this, this);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent();
+                i.setClass(MainActivity.this,Start.class);
+                startActivity(i);
+            }
+        });
         TextRecognizer textRecognizer = new TextRecognizer.Builder(MainActivity.this).build();
         if (!textRecognizer.isOperational()) {
             Toast.makeText(MainActivity.this,"bhbjhbjh",Toast.LENGTH_LONG).show();
@@ -185,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements
 //                Log.e("TTS", "This Language is not supported");
                 Toast.makeText(MainActivity.this,"This Language is not supported",Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(MainActivity.this,"error",Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this,"error",Toast.LENGTH_LONG).show();
             }
 
         } else {
