@@ -2,6 +2,7 @@ package com.developer.jatin.text;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements
     SurfaceView surfaceView;
     TextView textView;
     private TextToSpeech tts;
+    Switch mySwitch;
     CameraSource cameraSource;
  final int RequestCameraPermissionID=1001;
 
@@ -57,9 +61,26 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
+        mySwitch=(Switch)findViewById(R.id.switch1);
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+                if(isChecked){
+                    if (tts != null) {
+                        textView.setText("Point to Text");
+                        tts.stop();
+                        tts.shutdown();
+                    }
+                }else{
+                    tts_again();
+                }
+            }
+        });
         surfaceView = (SurfaceView) findViewById(R.id.surface);
         textView = (TextView) findViewById(R.id.text);
-
+         textView.setBackgroundColor(Color.TRANSPARENT);
         tts = new TextToSpeech(this, this);
         TextRecognizer textRecognizer = new TextRecognizer.Builder(MainActivity.this).build();
         if (!textRecognizer.isOperational()) {
@@ -126,18 +147,23 @@ public class MainActivity extends AppCompatActivity implements
                         });
 
                     }
-                 Thread t = new Thread();
-                    try {
-                        t.sleep(1000);
-                        String speechmy = textView.getText().toString();
-//                        tts.speak(speechmy, TextToSpeech.QUEUE_FLUSH , null);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                 Thread t = new Thread();
+//                    try {
+//                        t.sleep(1000);
+//                        String speechmy = textView.getText().toString();
+////                        tts.speak(speechmy, TextToSpeech.QUEUE_FLUSH , null);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             });
         }
     }
+    void tts_again()
+    {
+        tts = new TextToSpeech(this, this);
+    }
+
     @Override
     public void onDestroy() {
         // Don't forget to shutdown tts!
@@ -159,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements
 //                Log.e("TTS", "This Language is not supported");
                 Toast.makeText(MainActivity.this,"This Language is not supported",Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(MainActivity.this,"Bingo",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this,"error",Toast.LENGTH_LONG).show();
             }
 
         } else {
