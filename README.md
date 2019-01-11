@@ -21,5 +21,5 @@
 
 ## Authors
 
- -  [Jatin Bindra](https://www.linkedin.com/in/jb1998/)
+ - Copyright (c) 2019 [Jatin Bindra](https://www.linkedin.com/in/jb1998/)
  
