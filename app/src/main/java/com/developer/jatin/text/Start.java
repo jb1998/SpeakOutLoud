@@ -21,7 +21,7 @@ Button navigate;
             @Override
             public void onClick(View view) {
                 Intent i = new Intent();
-                i.setClass(Start.this,MainActivity.class);
+                i.setClass(Start.this,ScrollingActivity.class);
                 startActivity(i);
             }
         });
